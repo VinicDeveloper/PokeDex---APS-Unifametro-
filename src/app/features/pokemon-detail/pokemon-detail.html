@@ -1,0 +1,126 @@
+<nav class="barra">
+  <a class="botao" routerLink="/" [queryParams]="voltarQueryParams()">◄ Voltar à lista</a>
+  @if (estado(); as e) {
+    @if (e.status === 'ok') {
+      <div class="vizinhos">
+        @if (e.dados.id > 1) {
+          <a class="botao" [routerLink]="['/pokemon', e.dados.id - 1]">◄ {{ formatarNumero(e.dados.id - 1) }}</a>
+        }
+        <a class="botao" [routerLink]="['/pokemon', e.dados.id + 1]">{{ formatarNumero(e.dados.id + 1) }} ►</a>
+      </div>
+    }
+  }
+</nav>
+
+@if (estado(); as e) {
+  @if (e.status === 'carregando') {
+    <div class="mensagem-sistema brilho" role="status">
+      <div class="pokebola-girando" aria-hidden="true"></div>
+      <span class="titulo-sistema cursor">Lendo registro "{{ name() }}"</span>
+    </div>
+  } @else if (e.status === 'erro') {
+    <div class="mensagem-sistema erro" role="alert">
+      <span class="titulo-sistema">!! Registro indisponível</span>
+      <span>{{ e.mensagem }}</span>
+      <div class="acoes-erro">
+        <button type="button" class="botao botao-ambar" (click)="tentarNovamente()">Tentar novamente</button>
+        <a class="botao" routerLink="/">Ir para a lista</a>
+      </div>
+    </div>
+  } @else {
+    @let p = e.dados;
+    <article class="ficha">
+      <section class="visor" aria-label="Imagem do Pokémon">
+        <span class="visor-canto">{{ p.numero }}</span>
+        <span class="visor-canto direita">{{ shiny() ? 'SHINY' : 'NORMAL' }}</span>
+        @if ((shiny() ? p.imagemShiny : p.imagem); as imagem) {
+          <img [src]="imagem" [alt]="p.nome" width="320" height="320" />
+        } @else {
+          <span class="sem-imagem">SEM IMAGEM</span>
+        }
+        <div class="visor-controles">
+          <button type="button" class="botao" [class.ativo]="!shiny()" (click)="shiny.set(false)">Normal</button>
+          <button
+            type="button"
+            class="botao botao-ambar"
+            [class.ativo]="shiny()"
+            [disabled]="!p.imagemShiny"
+            (click)="shiny.set(true)"
+          >
+            ✦ Shiny
+          </button>
+        </div>
+      </section>
+
+      <section class="info">
+        <header class="cabecalho">
+          <span class="numero">{{ p.numero }}</span>
+          <h1 class="nome brilho">{{ p.nome }}</h1>
+          @if (p.genero) {
+            <p class="genero">{{ p.genero }}</p>
+          }
+          <div class="tipos">
+            @for (tipo of p.tipos; track tipo.chave) {
+              <span [class]="'tipo tipo-' + tipo.chave">{{ tipo.nome }}</span>
+            }
+          </div>
+        </header>
+
+        @if (p.registro) {
+          <div class="registro">
+            <span class="rotulo">Registro da Pokédex</span>
+            <p>{{ p.registro }}</p>
+            @if (vozDisponivel) {
+              <button type="button" class="botao botao-ambar" (click)="ouvir(p)">
+                {{ falando() ? '■ Parar' : '▶ Ouvir registro' }}
+              </button>
+            }
+          </div>
+        }
+
+        <dl class="dados">
+          <div>
+            <dt class="rotulo">Altura</dt>
+            <dd>{{ p.alturaM }} m</dd>
+          </div>
+          <div>
+            <dt class="rotulo">Peso</dt>
+            <dd>{{ p.pesoKg }} kg</dd>
+          </div>
+          <div class="habilidades">
+            <dt class="rotulo">Habilidades</dt>
+            <dd>
+              @for (h of p.habilidades; track h.nome) {
+                <span class="habilidade" [class.oculta]="h.oculta">
+                  {{ h.nome }}@if (h.oculta) { <small>(oculta)</small> }
+                </span>
+              }
+            </dd>
+          </div>
+        </dl>
+
+        <section class="stats" aria-label="Estatísticas base">
+          <span class="rotulo">Estatísticas base</span>
+          @for (s of p.stats; track s.chave) {
+            <div class="stat">
+              <span class="stat-nome">{{ s.nome }}</span>
+              <span class="stat-valor">{{ s.valor }}</span>
+              <span class="barra-trilho">
+                <span
+                  class="barra-valor"
+                  [class.baixo]="s.valor < 60"
+                  [class.medio]="s.valor >= 60 && s.valor < 100"
+                  [style.width.%]="s.percentual"
+                ></span>
+              </span>
+            </div>
+          }
+          <div class="stat total">
+            <span class="stat-nome">Total</span>
+            <span class="stat-valor">{{ p.totalStats }}</span>
+          </div>
+        </section>
+      </section>
+    </article>
+  }
+}

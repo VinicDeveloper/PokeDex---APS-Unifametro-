@@ -1,0 +1,69 @@
+<section class="painel-busca">
+  <label for="busca" class="rotulo">&gt; Consultar banco de dados</label>
+  <div class="campo">
+    <span class="prompt" aria-hidden="true">POKEDEX:\&gt;</span>
+    <input
+      id="busca"
+      type="search"
+      [ngModel]="termo()"
+      (ngModelChange)="termo.set($event)"
+      placeholder="nome ou número (ex.: pikachu, 25)"
+      autocomplete="off"
+      spellcheck="false"
+    />
+    @if (termo()) {
+      <button type="button" class="limpar" (click)="limparBusca()" aria-label="Limpar busca">✕</button>
+    }
+  </div>
+</section>
+
+@if (estado(); as e) {
+  @if (e.status === 'carregando') {
+    <div class="mensagem-sistema brilho" role="status">
+      <div class="pokebola-girando" aria-hidden="true"></div>
+      <span class="titulo-sistema cursor">Acessando banco de dados</span>
+    </div>
+  } @else if (e.status === 'erro') {
+    <div class="mensagem-sistema erro" role="alert">
+      <span class="titulo-sistema">!! Falha na transmissão</span>
+      <span>{{ e.mensagem }}</span>
+      <button type="button" class="botao botao-ambar" (click)="tentarNovamente()">Tentar novamente</button>
+    </div>
+  } @else if (e.dados.itens.length === 0) {
+    <div class="mensagem-sistema brilho" role="status">
+      <span class="titulo-sistema">Nenhum registro encontrado</span>
+      <span>Nenhum Pokémon corresponde a "{{ busca() }}".</span>
+      <button type="button" class="botao" (click)="limparBusca()">Ver todos</button>
+    </div>
+  } @else {
+    <p class="status-linha brilho">
+      @if (busca()) {
+        {{ e.dados.total }} registro(s) para "{{ busca() }}"
+      } @else {
+        {{ e.dados.total }} registros no banco de dados
+      }
+      · página {{ pagina() }} de {{ totalPaginas() }}
+    </p>
+
+    <div class="grade">
+      @for (pokemon of e.dados.itens; track pokemon.id) {
+        <app-pokemon-card [pokemon]="pokemon" />
+      }
+    </div>
+
+    <nav class="paginacao" aria-label="Paginação">
+      <button type="button" class="botao" [disabled]="pagina() <= 1" (click)="irParaPagina(pagina() - 1)">
+        ◄ Anterior
+      </button>
+      <span class="indicador brilho">{{ pagina() }} / {{ totalPaginas() }}</span>
+      <button
+        type="button"
+        class="botao"
+        [disabled]="pagina() >= totalPaginas()"
+        (click)="irParaPagina(pagina() + 1)"
+      >
+        Próxima ►
+      </button>
+    </nav>
+  }
+}

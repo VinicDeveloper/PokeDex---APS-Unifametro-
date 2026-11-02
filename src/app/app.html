@@ -1,0 +1,25 @@
+<div class="dispositivo">
+  <header class="topo">
+    <span class="lente" aria-hidden="true"></span>
+    <span class="leds" aria-hidden="true">
+      <span class="led led-vermelho"></span>
+      <span class="led led-amarelo"></span>
+      <span class="led led-verde"></span>
+    </span>
+    <a routerLink="/" class="marca" aria-label="Pokédex — página inicial">
+      <span class="marca-titulo">POKÉDEX</span>
+      <span class="marca-sub">Terminal de consulta · PokéAPI v2</span>
+    </a>
+  </header>
+
+  <main class="tela">
+    <div class="tela-conteudo">
+      <router-outlet />
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <span class="grade-som" aria-hidden="true"></span>
+    <span>Dados fornecidos pela PokéAPI · Projeto acadêmico DAC · Unifametro {{ agora.getFullYear() }}</span>
+  </footer>
+</div>

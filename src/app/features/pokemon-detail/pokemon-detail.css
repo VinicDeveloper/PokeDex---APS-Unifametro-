@@ -1,0 +1,218 @@
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.vizinhos,
+.acoes-erro {
+  display: flex;
+  gap: 10px;
+}
+
+.ficha {
+  display: grid;
+  grid-template-columns: minmax(260px, 400px) 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.visor {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 24px;
+  border: 2px solid var(--fosforo-fraco);
+  border-radius: 10px;
+  background:
+    radial-gradient(circle, rgb(125 249 200 / 0.16), transparent 65%),
+    repeating-linear-gradient(0deg, rgb(125 249 200 / 0.07) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgb(125 249 200 / 0.07) 0 1px, transparent 1px 32px);
+}
+
+.visor img {
+  width: 82%;
+  height: auto;
+  filter: drop-shadow(0 0 14px rgb(125 249 200 / 0.4));
+  animation: flutuar 4s ease-in-out infinite;
+}
+
+.visor-canto {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-family: var(--fonte-titulo);
+  font-size: 9px;
+  color: var(--ambar);
+}
+
+.visor-canto.direita {
+  left: auto;
+  right: 14px;
+  color: var(--fosforo-fraco);
+}
+
+.visor-controles {
+  position: absolute;
+  bottom: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.visor-controles .botao {
+  padding: 7px 10px;
+  font-size: 8px;
+  background: var(--tela);
+}
+
+.visor-controles .botao.ativo {
+  box-shadow: 0 0 12px currentColor;
+}
+
+.sem-imagem {
+  font-family: var(--fonte-titulo);
+  font-size: 12px;
+  color: var(--fosforo-fraco);
+}
+
+.info {
+  display: grid;
+  gap: 22px;
+}
+
+.cabecalho {
+  display: grid;
+  gap: 8px;
+}
+
+.numero {
+  font-family: var(--fonte-titulo);
+  font-size: 12px;
+  color: var(--ambar);
+}
+
+.nome {
+  font-size: clamp(20px, 3.4vw, 32px);
+  text-transform: uppercase;
+  color: var(--fosforo-claro);
+}
+
+.genero {
+  margin: 0;
+  font-size: 24px;
+  color: var(--fosforo-fraco);
+}
+
+.tipos {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.registro {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding: 12px 16px;
+  border-left: 3px solid var(--ambar);
+  background: rgb(255 209 102 / 0.05);
+}
+
+.registro p {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.25;
+  color: var(--fosforo-claro);
+}
+
+.dados {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  gap: 14px;
+  margin: 0;
+}
+
+.dados dd {
+  margin: 6px 0 0;
+  font-size: 26px;
+  color: var(--fosforo-claro);
+}
+
+.habilidade {
+  display: inline-block;
+  margin-right: 14px;
+}
+
+.habilidade.oculta {
+  color: var(--ambar);
+}
+
+.habilidade small {
+  margin-left: 6px;
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+.stats {
+  display: grid;
+  gap: 6px;
+}
+
+.stat {
+  display: grid;
+  grid-template-columns: 130px 46px 1fr;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+}
+
+.stat-valor {
+  text-align: right;
+  color: var(--fosforo-claro);
+}
+
+.barra-trilho {
+  height: 14px;
+  border: 1px solid rgb(125 249 200 / 0.3);
+  background: rgb(125 249 200 / 0.06);
+}
+
+.barra-valor {
+  display: block;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, var(--fosforo) 0 8px, transparent 8px 10px);
+  box-shadow: 0 0 8px rgb(125 249 200 / 0.5);
+  transition: width 0.6s ease-out;
+}
+
+.barra-valor.medio {
+  background: repeating-linear-gradient(90deg, var(--ambar) 0 8px, transparent 8px 10px);
+}
+
+.barra-valor.baixo {
+  background: repeating-linear-gradient(90deg, var(--alerta) 0 8px, transparent 8px 10px);
+}
+
+.stat.total {
+  padding-top: 6px;
+  border-top: 1px dashed rgb(125 249 200 / 0.3);
+  color: var(--ambar);
+}
+
+@keyframes flutuar {
+  50% { transform: translateY(-8px); }
+}
+
+@media (max-width: 860px) {
+  .ficha { grid-template-columns: 1fr; }
+  .visor { max-width: 420px; width: 100%; justify-self: center; }
+}
+
+@media (max-width: 560px) {
+  .dados { grid-template-columns: 1fr 1fr; }
+  .habilidades { grid-column: 1 / -1; }
+  .stat { grid-template-columns: 104px 40px 1fr; font-size: 20px; }
+}

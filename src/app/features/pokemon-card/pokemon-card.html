@@ -1,0 +1,18 @@
+<a class="cartao" [routerLink]="['/pokemon', pokemon().nome]" [attr.aria-label]="'Abrir registro de ' + nome()">
+  <span class="numero">{{ numero() }}</span>
+  <div class="foto">
+    @if (!imagemFalhou()) {
+      <img
+        [src]="pokemon().imagem"
+        [alt]="nome()"
+        loading="lazy"
+        width="120"
+        height="120"
+        (error)="imagemFalhou.set(true)"
+      />
+    } @else {
+      <span class="sem-foto" aria-hidden="true">?</span>
+    }
+  </div>
+  <span class="nome">{{ nome() }}</span>
+</a>

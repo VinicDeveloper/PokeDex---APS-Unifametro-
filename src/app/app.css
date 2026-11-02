@@ -1,0 +1,143 @@
+.dispositivo {
+  max-width: 1180px;
+  margin: 24px auto;
+  padding: 18px 22px 14px;
+  border-radius: 28px;
+  background: linear-gradient(160deg, var(--casco) 0%, var(--casco-escuro) 100%);
+  box-shadow:
+    inset 0 2px 0 rgb(255 255 255 / 0.25),
+    inset 0 -6px 0 var(--casco-sombra),
+    0 30px 70px rgb(0 0 0 / 0.65);
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 4px 6px 18px;
+  margin-bottom: 18px;
+  border-bottom: 4px solid var(--casco-sombra);
+}
+
+.lente {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 5px solid var(--moldura);
+  background: radial-gradient(circle at 35% 30%, #d8f8ff 0 8%, var(--lente) 30%, #0a4f78 80%);
+  box-shadow: 0 0 0 3px var(--casco-sombra), 0 0 22px rgb(46 196 241 / 0.6);
+  animation: pulsar 3s ease-in-out infinite;
+}
+
+.leds {
+  display: flex;
+  gap: 8px;
+  align-self: flex-start;
+  margin-top: 6px;
+}
+
+.led {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--casco-sombra);
+}
+.led-vermelho { background: #ff4d5e; box-shadow: 0 0 8px #ff4d5e; }
+.led-amarelo { background: #ffd166; box-shadow: 0 0 8px #ffd166; animation: piscar 1.6s steps(2) infinite; }
+.led-verde { background: #5be38b; box-shadow: 0 0 8px #5be38b; }
+
+.marca {
+  margin-left: auto;
+  text-align: right;
+  text-decoration: none;
+  color: var(--creme);
+}
+
+.marca-titulo {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(14px, 2.6vw, 22px);
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0 var(--casco-sombra);
+}
+
+.marca-sub {
+  display: block;
+  margin-top: 6px;
+  font-size: 18px;
+  opacity: 0.85;
+}
+
+.tela {
+  position: relative;
+  min-height: 70vh;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 10px solid var(--moldura);
+  background: radial-gradient(ellipse at top, var(--tela-2), var(--tela) 70%);
+  box-shadow: inset 0 0 0 2px #000, inset 0 0 80px rgb(0 0 0 / 0.85);
+}
+
+.tela::before,
+.tela::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.tela::before {
+  background: repeating-linear-gradient(0deg, rgb(0 0 0 / 0.22) 0 1px, transparent 1px 3px);
+  animation: tremular 6s infinite;
+}
+
+.tela::after {
+  background: radial-gradient(ellipse at center, transparent 60%, rgb(0 0 0 / 0.55));
+}
+
+.tela-conteudo {
+  position: relative;
+  z-index: 1;
+  padding: clamp(14px, 3vw, 28px);
+}
+
+.rodape {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 6px 2px;
+  font-size: 17px;
+  color: var(--creme);
+  opacity: 0.85;
+}
+
+.grade-som {
+  flex: none;
+  width: 60px;
+  height: 18px;
+  background: repeating-linear-gradient(90deg, var(--casco-sombra) 0 4px, transparent 4px 8px);
+  border-radius: 3px;
+}
+
+@keyframes pulsar {
+  50% { box-shadow: 0 0 0 3px var(--casco-sombra), 0 0 34px rgb(46 196 241 / 0.95); }
+}
+
+@keyframes piscar {
+  50% { opacity: 0.35; }
+}
+
+@keyframes tremular {
+  0%, 100% { opacity: 1; }
+  48% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 640px) {
+  .dispositivo { margin: 0; border-radius: 0; padding: 12px; }
+  .leds { display: none; }
+  .lente { width: 48px; height: 48px; }
+  .rodape { font-size: 15px; }
+}

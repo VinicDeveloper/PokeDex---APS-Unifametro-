@@ -1,0 +1,71 @@
+:host {
+  display: block;
+}
+
+.cartao {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 12px 10px 14px;
+  text-decoration: none;
+  color: var(--fosforo);
+  background: var(--painel);
+  border: 1px solid rgb(125 249 200 / 0.25);
+  border-radius: 8px;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.cartao:hover,
+.cartao:focus-visible {
+  outline: none;
+  transform: translateY(-3px);
+  border-color: var(--fosforo);
+  background: rgb(125 249 200 / 0.1);
+  box-shadow: 0 0 18px rgb(125 249 200 / 0.35);
+}
+
+.numero {
+  align-self: start;
+  justify-self: start;
+  font-family: var(--fonte-titulo);
+  font-size: 9px;
+  color: var(--ambar);
+}
+
+.foto {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgb(125 249 200 / 0.14), transparent 70%),
+    repeating-radial-gradient(circle, transparent 0 14px, rgb(125 249 200 / 0.08) 14px 15px);
+}
+
+.foto img {
+  width: 108px;
+  height: 108px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgb(125 249 200 / 0.35));
+  transition: transform 0.2s;
+}
+
+.cartao:hover .foto img {
+  transform: scale(1.08);
+}
+
+.sem-foto {
+  font-family: var(--fonte-titulo);
+  font-size: 28px;
+  color: var(--fosforo-fraco);
+}
+
+.nome {
+  font-size: 24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: 0 0 6px rgb(125 249 200 / 0.45);
+}
